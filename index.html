@@ -1,33 +1,33 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Шифр ADFGVX</title>
-  <link href="style.css" rel="stylesheet">
-</head>
-<body>
-  <div class="container">
-    <h1>Шифр ADFGVX</h1>
-
-    <div style="text-align: left; margin-bottom: 10px;">
-      <label for="text">Введите текст:</label><br>
-      <textarea id="text" rows="5" cols="40"></textarea>
-    </div>
-
-    <div style="text-align: left; margin-bottom: 10px;">
+  <head>
+    <title>Шифр ADFGVX</title>
+    <link href="style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container">
+      <h1>Шифр ADFGVX</h1>
+      
+      <div style="text-align: left; margin-bottom: 10px;">
+        <label for="text">Введите текст:</label><br>
+        <textarea id="text" rows="5" cols="40"></textarea>
+      </div>
+      
+      <div style="text-align: left; margin-bottom: 10px;">
         <label for="key">Ключ:</label>
         <input type="text" id="key" placeholder="Введите ключ">
+      </div>
+      
+      <div style="text-align: left;">
+        <label for="result">Результат:</label><br>
+        <textarea id="result" rows="5" cols="40" readonly></textarea>
+      </div>
+      
+      <br>
+      <button onclick="encrypt()">Зашифровать</button>
+      <button onclick="decrypt()">Расшифровать</button>
     </div>
-
-    <div style="text-align: left;">
-      <label for="result">Результат:</label><br>
-      <textarea id="result" rows="5" cols="40" readonly></textarea>
-    </div>
-
-    <br>
-    <button onclick="encrypt()">Зашифровать</button>
-    <button onclick="decrypt()">Расшифровать</button>
-  </div>
-
-  <script src="index.js"></script>
-</body>
-</html>
+    
+    <script src="index.js"></script>
+  </body>
+  </html>
