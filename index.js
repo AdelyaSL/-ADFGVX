@@ -7,6 +7,7 @@ const substitutionTable = {
   'Q': 'XD', 'R': 'XG', 'S': 'XV', 'T': 'XX',
   'U': 'DA', 'V': 'DG', 'W': 'DV', 'X': 'DX',
   'Y': 'FA', 'Z': 'FG'};
+
 function createGrid(key) {
   let grid = {};
   let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -20,6 +21,7 @@ function createGrid(key) {
   }
   return grid;
 }
+
 function encode(text, key, grid) {
   let encoded = "";
   for (let i = 0; i < text.length; i++) {
@@ -32,6 +34,7 @@ function encode(text, key, grid) {
   }
   return encoded;
 }
+
 function permute(encodedText, key) {
   let keySorted = key.split('').sort();
   let keyLength = key.length;
@@ -58,6 +61,7 @@ function permute(encodedText, key) {
   }
   return permutedText;
 }
+
 function decryptText(text, key, grid) {
   let keySorted = key.split('').sort();
   let keyLength = key.length;
@@ -101,6 +105,7 @@ function decryptText(text, key, grid) {
   }
   return decrypted;
 }
+
 function encrypt() {
   let text = document.getElementById("text").value;
   let key = document.getElementById("key").value.toUpperCase(); // Keep key uppercase
@@ -109,6 +114,7 @@ function encrypt() {
   let permutedText = permute(encodedText, key);
   document.getElementById("result").value = permutedText;
 }
+
 function decrypt() {
   let text = document.getElementById("text").value;
   let key = document.getElementById("key").value.toUpperCase();
