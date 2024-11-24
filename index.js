@@ -11,7 +11,6 @@ const adfgvxTable = [
 function createLookupMaps(table) {
   const charToCode = {};
   const codeToChar = {};
-
   for (let i = 0; i < table.length; i++) {
     for (let j = 0; j < table[i].length; j++) {
       const rowChar = adfgvxChars[i];
@@ -20,11 +19,11 @@ function createLookupMaps(table) {
       codeToChar[rowChar + colChar] = table[i][j];
     }
   }
-
   return { charToCode, codeToChar };
 }
 
 const { charToCode, codeToChar } = createLookupMaps(adfgvxTable);
+
 
 function encrypt() {
   const text = document.getElementById('text').value;
@@ -48,7 +47,7 @@ function encrypt() {
   const columns = key.length;
   const rows = Math.ceil(substitutedText.length / columns);
   const grid = Array.from({ length: rows }, (_, i) =>
-    substitutedText.slice(i * columns, (i + 1) * columns).padEnd(columns, 'X')
+    substitutedText.slice(i * columns, (i + 1) * columns)
   );
 
   const sortedKey = [...key].map((char, index) => [char, index]).sort();
@@ -56,7 +55,9 @@ function encrypt() {
 
   for (const [, index] of sortedKey) {
     for (const row of grid) {
-      result += row[index];
+      if (row[index] !== undefined) {
+        result += row[index];
+      }
     }
   }
 
@@ -75,42 +76,51 @@ function decrypt() {
   const columns = key.length;
   const rows = Math.ceil(text.length / columns);
 
+  const columnLengths = Array(columns).fill(Math.floor(text.length / columns));
+  for (let i = 0; i < text.length % columns; i++) {
+    columnLengths[i]++;
+  }
+
   const sortedKey = [...key].map((char, index) => [char, index]).sort();
   const grid = Array.from({ length: rows }, () => Array(columns).fill(''));
 
   let index = 0;
+
   for (const [, keyIndex] of sortedKey) {
-    for (let row = 0; row < rows; row++) {
+    for (let row = 0; row < columnLengths[keyIndex]; row++) {
       if (index < text.length) {
         grid[row][keyIndex] = text[index++];
       }
     }
   }
 
-  const substitutedText = grid.map(row => row.join('')).join('');
+  let substitutedText = '';
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < columns; col++) {
+      if (grid[row][col] !== '') {
+        substitutedText += grid[row][col];
+      }
+    }
+  }
 
   let result = '';
   let i = 0;
+
   while (i < substitutedText.length) {
     const pair = substitutedText.slice(i, i + 2);
-
-    if (pair === 'XX' || pair === 'X') {
-      i += 1;
-      continue;
-    }
 
     if (codeToChar[pair]) {
       result += codeToChar[pair];
       i += 2;
     } else {
-      result += substitutedText[i]; 
-      i += 1;
+      result += substitutedText[i];
+      i++;
     }
   }
 
   document.getElementById('result').value = result;
 }
 
-// Обработчики событий
 document.getElementById('encryptBtn').addEventListener('click', encrypt);
 document.getElementById('decryptBtn').addEventListener('click', decrypt);
+
